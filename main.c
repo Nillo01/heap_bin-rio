@@ -9,8 +9,11 @@
 int main(){
     bool rodando = true;
     int tam;
-    printf("digite um tamanho inicial para sua arvore heap");
-    scanf("%d", &tam);
+    printf("digite um tamanho inicial para sua arvore heap: \n");
+    if (scanf("%d", &tam) != 1 || tam <= 0) {
+        printf("Valor invalido!\n");
+        return 0;
+        }
     heap* h = heap_criar(tam);
     while(rodando){
         int estado;
