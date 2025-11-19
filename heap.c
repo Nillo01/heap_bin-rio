@@ -122,3 +122,9 @@ int heap_remove(heap *h) {
     }
     return valor_removido;
 }
+
+void heap_destroi(heap *h) {
+    if (!h) return;
+    free(h->vet);
+    free(h);
+}
