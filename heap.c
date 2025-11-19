@@ -1,12 +1,13 @@
 
 #include<stdio.h>
 #include<stdlib.h>
+#define MIN_A 4
 
 
 typedef struct{
     int* vet;
-    int n;
-    int tam;
+    int n;     // qtd de itens inseridos
+    int tam;   // cap total
 }heap;
 
 int pai(int i) {
@@ -21,23 +22,32 @@ int filho_direito(int i) {
     return (2 * i) + 2;
 }
 
-
+static void confirma_aloc(void *ptr) {
+    if (ptr == NULL) {
+        printf("Erro: falha na alocação de memória.\n");
+        exit(EXIT_FAILURE);
+    }
+}
 
 heap* heap_criar(int tama){
+    if(tama < MIN_A)tama = MIN_A;
     heap* h;
     h = (heap*) malloc(sizeof(heap));
-    h->n = tama;
-    h->vet = (int*)malloc(h->n * sizeof(int));
+    confirma_aloc(h);
+    h->tam = tama;
+    h->vet = (int*)malloc(h->tam * sizeof(int));
+    confirma_aloc(h->vet);
     h->n = 0; 
     return h;
 }
 
 void heap_realoca(heap* h){
     if (h->n == h->tam) {
-            int tam2 = h->tam * 2;
-            int *novo_vetor = (int*) realloc(h->vet, tam2 * sizeof(int));     
-                h->vet = novo_vetor;
-                h->tam = tam2;
+        int tam2 = h->tam * 2;
+        int *novo_vetor = (int*) realloc(h->vet, tam2 * sizeof(int));    
+        confirma_aloc(novo_vetor);             
+        h->vet = novo_vetor;
+        h->tam = tam2;
     }
 }
 
